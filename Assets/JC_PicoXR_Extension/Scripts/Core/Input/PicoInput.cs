@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.XR;
 
-public class PicoControllerInput : MonoBehaviour
+public class PicoInput : MonoBehaviour
 {
     // => https://hackmd.io/@jcxyisncu1102/steamvr-to-pico/%2FWW0m58UyQM6buo2FrQ42mg
     // Menu	CommonUsages.menuButton
@@ -33,16 +33,16 @@ public class PicoControllerInput : MonoBehaviour
 
     /* -------------------------------------------------------------------------- */
 
-    private static PicoControllerInput _instance;
+    private static PicoInput _instance;
 
     private static void EnsureInstance()
     {
         if(_instance == null)
         {
-            PicoControllerInput comp = new GameObject().AddComponent<PicoControllerInput>();
+            PicoInput comp = new GameObject().AddComponent<PicoInput>();
             DontDestroyOnLoad(comp);
             _instance = comp;
-            _instance.name = " (Instance) " + typeof(PicoControllerInput);
+            _instance.name = " (Instance) " + typeof(PicoInput);
         }
     }
 
@@ -70,14 +70,14 @@ public class PicoControllerInput : MonoBehaviour
             bool current = _GetButton(key);
             if(buttonStatus.TryGetValue(key, out ButtonStatus b))
             {
+                b.isUp = b.isPressed && !current;
+                b.isDown = !b.isPressed && current;
                 b.isPressed = current;
-                b.isDown = !b.isDown && current;
-                b.isUp = !b.isUp && !current;
             }
         }
     }
 
-    private static bool _GetButton(PicoButton button)
+    private bool _GetButton(PicoButton button)
     {
         XRNode hand = button >= PicoButton.MenuR ? XRNode.LeftHand : XRNode.RightHand;
 
@@ -110,14 +110,17 @@ public class PicoControllerInput : MonoBehaviour
 
     public static bool GetButton(PicoButton button)
     {
+        EnsureInstance();
         return buttonStatus[button].isPressed;
     }
     public static bool GetButtonDown(PicoButton button)
     {
+        EnsureInstance();
         return buttonStatus[button].isDown;
     }
     public static bool GetButtonUp(PicoButton button)
     {
+        EnsureInstance();
         return buttonStatus[button].isUp;
     }
 }

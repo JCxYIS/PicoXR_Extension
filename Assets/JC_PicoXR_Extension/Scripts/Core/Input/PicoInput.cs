@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.XR;
 
+/// <summary>
+/// Shortcut/Helpers to the Pico Inputs
+/// </summary>
 public class PicoInput : MonoBehaviour
 {
     // => https://hackmd.io/@jcxyisncu1102/steamvr-to-pico/%2FWW0m58UyQM6buo2FrQ42mg
@@ -12,7 +15,7 @@ public class PicoInput : MonoBehaviour
     // Joystick	CommonUsages.primary2DAxisClick
     // X/A	CommonUsages.primaryButton
     // Y/B	CommonUsages.secondaryButton
-
+    
     public enum PicoButton 
     { 
         MenuL, TriggerL, GripL, JoystickL, X, Y, // 0-5
@@ -79,29 +82,28 @@ public class PicoInput : MonoBehaviour
 
     private bool _GetButton(PicoButton button)
     {
-        XRNode hand = button >= PicoButton.MenuR ? XRNode.LeftHand : XRNode.RightHand;
-
+        XRNode node = button >= PicoButton.MenuR ? XRNode.LeftHand : XRNode.RightHand;
         bool result;
         switch(button)
         {
             case PicoButton.MenuL:
             case PicoButton.MenuR:
-                return InputDevices.GetDeviceAtXRNode(hand).TryGetFeatureValue(CommonUsages.menuButton, out result) && result;
+                return InputDevices.GetDeviceAtXRNode(node).TryGetFeatureValue(CommonUsages.menuButton, out result) && result;
             case PicoButton.TriggerL:
             case PicoButton.TriggerR:
-                return InputDevices.GetDeviceAtXRNode(hand).TryGetFeatureValue(CommonUsages.triggerButton, out result) && result;
+                return InputDevices.GetDeviceAtXRNode(node).TryGetFeatureValue(CommonUsages.triggerButton, out result) && result;
             case PicoButton.GripL:
             case PicoButton.GripR:
-                return InputDevices.GetDeviceAtXRNode(hand).TryGetFeatureValue(CommonUsages.gripButton, out result) && result;
+                return InputDevices.GetDeviceAtXRNode(node).TryGetFeatureValue(CommonUsages.gripButton, out result) && result;
             case PicoButton.JoystickL:
             case PicoButton.JoystickR:
-                return InputDevices.GetDeviceAtXRNode(hand).TryGetFeatureValue(CommonUsages.primary2DAxisClick, out result) && result;
+                return InputDevices.GetDeviceAtXRNode(node).TryGetFeatureValue(CommonUsages.primary2DAxisClick, out result) && result;
             case PicoButton.X:
             case PicoButton.A:
-                return InputDevices.GetDeviceAtXRNode(hand).TryGetFeatureValue(CommonUsages.primaryButton, out result) && result;
+                return InputDevices.GetDeviceAtXRNode(node).TryGetFeatureValue(CommonUsages.primaryButton, out result) && result;
             case PicoButton.Y:
             case PicoButton.B:
-                return InputDevices.GetDeviceAtXRNode(hand).TryGetFeatureValue(CommonUsages.secondaryButton, out result) && result;
+                return InputDevices.GetDeviceAtXRNode(node).TryGetFeatureValue(CommonUsages.secondaryButton, out result) && result;
         }
         throw new System.NotImplementedException("No such key: (PicoButton)"+button);
     }

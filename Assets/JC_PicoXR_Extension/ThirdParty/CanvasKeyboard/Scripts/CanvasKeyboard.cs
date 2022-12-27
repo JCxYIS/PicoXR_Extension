@@ -31,9 +31,8 @@ namespace TalesFromTheRift
 			if(!Instance || !Instance.gameObject)
 			{
 				Instance = GameObject.FindObjectOfType<CanvasKeyboard>();
-			}			
-			inputObject = input;
-			Instance.OpenKeyboard();
+			}						
+			Instance.OpenKeyboard(input);
 			Debug.Log("[CanvasKeyboard] Opened");
 		}
 		
@@ -43,8 +42,7 @@ namespace TalesFromTheRift
 			{
 				Instance = GameObject.FindObjectOfType<CanvasKeyboard>();
 			}
-			Instance.CloseKeyboard();
-			inputObject = null;
+			Instance.CloseKeyboard();			
 			Debug.Log("[CanvasKeyboard] Closed");
 		}
 
@@ -129,8 +127,9 @@ namespace TalesFromTheRift
 
 		}
 
-		public void OpenKeyboard()
+		public void OpenKeyboard(InputField input)
 		{
+			inputObject = input;
 			gameObject.SetActive(true);
 		}
 
@@ -138,6 +137,7 @@ namespace TalesFromTheRift
 		{
 			// Destroy(gameObject);
 			gameObject.SetActive(false);
+			inputObject = null;
 		}
 
 		#endregion

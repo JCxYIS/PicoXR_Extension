@@ -30,7 +30,7 @@ public class InputFieldPatcher : MonoBehaviour
     /// <summary>
     /// Patch all input fields.
     /// </summary>
-    public void Patch()
+    public static void Patch()
     {
         InputField[] ifs = Resources.FindObjectsOfTypeAll<InputField>();
         int i = 0;

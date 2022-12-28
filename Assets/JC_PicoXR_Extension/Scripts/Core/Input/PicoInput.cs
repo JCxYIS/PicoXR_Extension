@@ -125,4 +125,17 @@ public class PicoInput : MonoBehaviour
         EnsureInstance();
         return buttonStatus[button].isUp;
     }
+
+    /// <summary>
+    /// GetJoystickValue
+    /// </summary>
+    /// <param name="deviceNo">0: Left Hand; 1: Right Hand</param>
+    /// <returns>Vector2 capped within (-1,-1) to (1,1)</returns>
+    public static Vector2 GetJoystickValue(int deviceNo)
+    {
+        XRNode node = deviceNo == 0 ? XRNode.LeftHand : XRNode.RightHand;
+        if(InputDevices.GetDeviceAtXRNode(node).TryGetFeatureValue(CommonUsages.primary2DAxis, out var result))
+            return result;
+        return Vector2.zero;
+    }
 }

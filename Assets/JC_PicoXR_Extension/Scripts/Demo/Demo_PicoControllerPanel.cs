@@ -31,5 +31,7 @@ public class Demo_PicoControllerPanel : MonoBehaviour
             PicoButton b = (PicoButton)i;
             _statusText.text += b + ": " + (PicoInput.GetButton(b) ? "<color=lime>O</color>" : "<color=red>X</color>") + "\n";
         }
+        _statusText.text += $"JoystickL: ${PicoInput.GetJoystickValue(0)}\n";
+        _statusText.text += $"JoystickR: ${PicoInput.GetJoystickValue(1)}\n";
     }
 }

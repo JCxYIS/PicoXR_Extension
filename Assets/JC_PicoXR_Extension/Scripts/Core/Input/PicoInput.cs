@@ -82,7 +82,7 @@ public class PicoInput : MonoBehaviour
 
     private bool _GetButton(PicoButton button)
     {
-        XRNode node = button >= PicoButton.MenuR ? XRNode.LeftHand : XRNode.RightHand;
+        XRNode node = button < PicoButton.MenuR ? XRNode.LeftHand : XRNode.RightHand;
         bool result;
         switch(button)
         {
